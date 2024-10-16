@@ -5,7 +5,6 @@ import NavBar from '../components/NavBar';
 import Loading from "./Loading";
 import Swal from "sweetalert2";
 import "../styles/banner.css";
-import { Link } from 'react-router-dom';
 
 function HomeLogin() {
   // Usa la query para obtener los datos del usuario

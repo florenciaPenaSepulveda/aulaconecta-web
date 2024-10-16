@@ -22,7 +22,7 @@ function ForgotPass() {
         }
       });
     },
-    onError: (e) => {
+    onError: (_e) => {
       Swal.fire({
         title: 'Error',
         text: 'No se pudo enviar el correo de recuperación. Verifica tu email.',
