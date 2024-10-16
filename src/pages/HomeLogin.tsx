@@ -36,7 +36,7 @@ function HomeLogin() {
         {/* Sección de cursos */}
         <div className="text-left px-4 text-[#1B4332]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {["Asignatura 1", "Asignatura 2", "Asignatura 3", "Asignatura 4", "Asignatura 5"].map((course, index) => (
+            {["Asignatura 1", "Asignatura 2", "Asignatura 3", "Asignatura 4", "Asignatura 5", "Asignatura 6"].map((course, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
                 <h3 className="text-xl font-bold">{course}</h3>
                 <p className="text-gray-600">Title</p>
