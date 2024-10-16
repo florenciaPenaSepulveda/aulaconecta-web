@@ -15,15 +15,8 @@ import { setContext } from '@apollo/client/link/context';
 
 
 const httpLink = createHttpLink({
-  uri: "http://192.168.51.26:3000/graphql",
+  uri: "https://listings-illness-miller-advice.trycloudflare.com/graphql",
 });
-
-
-if ( !navigator.geolocation ){
-  alert ('Tu navegador no tiene opcion de Geolocalización')
-  throw new Error('Tu navegador no tiene opcion de Geolocalización')
-}
-
 
 
 const authLink = setContext((_, { headers }) => {

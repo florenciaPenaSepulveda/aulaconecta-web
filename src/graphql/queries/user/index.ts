@@ -25,3 +25,12 @@ export const GET_USERS = gql`
         }
 }
 `;
+
+export const GET_USER_DATA = gql`
+  query GetUserData {
+    me {
+      name
+      email
+    }
+  }
+`;

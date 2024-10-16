@@ -1,11 +1,11 @@
 // src/components/NavBar.tsx
-import "../styles/banner.css"
+import "../styles/banner.css";
 import { Link } from 'react-router-dom';
 import img_user from '../components/Imagenes/img_user.png';
 
 const NavBar: React.FC = () => {
   return (
-    <nav className="bg-[#1B4332] py-4">
+    <nav className="bg-[#ADC178] py-4">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -20,22 +20,22 @@ const NavBar: React.FC = () => {
               </svg>
             </button>
           </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+          <div className="flex flex-1 items-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
               <h1 className="h-10 w-auto text-white text-5xl font-bold">CloseIA</h1>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                <Link to={"/HomeLogin"} className="text-white hover:bg-[#95D5B2] rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Inicio</Link>
-                <Link to={"/MisServicios"} className="text-white hover:bg-[#95D5B2] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mis Cursos</Link>
-                <Link to={"/Contacto"} className="text-white hover:bg-[#95D5B2] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Registro de Estudiantes</Link>
-                <Link to={"/Contacto"} className="text-white hover:bg-[#95D5B2] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Gestión de Asignaturas</Link>
-                <Link to={"/Contacto"} className="text-white hover:bg-[#95D5B2] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Control de Asistencia</Link>
+                <Link to={"/HomeLogin"} className="text-white hover:bg-[#DDE5B6] rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Inicio</Link>
+                <Link to={"/MisCursos"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mis Cursos</Link>
+                <Link to={"/RegEstudiantes"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Registro de Estudiantes</Link>
+                <Link to={"/GestAsig"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Gestión de Asignaturas</Link>
+                <Link to={"/Asistencia"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Control de Asistencia</Link>
               </div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button type="button" className="relative rounded-full hover:bg-[#95D5B2] p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+            <button type="button" className="relative rounded-full hover:bg-[#DDE5B6] p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
               <span className="absolute -inset-1.5"></span>
               <span className="sr-only">View notifications</span>
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
