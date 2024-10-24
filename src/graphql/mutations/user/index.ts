@@ -17,9 +17,20 @@ export const FORGOT_PASS = gql`
 `;
 
 export const REGISTER = gql`
-    mutation Register($nombre: String!, $apellidos: String!, $email: String!, $pass: String!) {
-        register(name: $nombre, apellidos: $apellidos, email: $email, password: $pass) {
-            message
-        }
+  mutation Register($firstName: String!, $lastName: String!, $rut: String!, $email: String!, $role: UserRoles!, $password: String!) {
+    createUser(createUserDto: {
+      firstName: $firstName,
+      lastName: $lastName,
+      rut: $rut,
+      email: $email,
+      role: $role,
+      password: $password
+    }) {
+      id
+      firstName
+      lastName
+      email
+      role
     }
+  }
 `;

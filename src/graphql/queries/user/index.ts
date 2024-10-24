@@ -10,6 +10,8 @@ export const INICIO_SESION = gql`
     }
 `;
 
+
+
 export const Mensaje = gql`
     query InicioSesion {
         mensaje
@@ -26,11 +28,11 @@ export const GET_USERS = gql`
 }
 `;
 
-export const GET_USER_DATA = gql`
-  query GetUserData {
-    me {
-      name
-      email
+export const OBTENER_INFO = gql`
+    query{
+        conseguirInformacionUsuario{
+            nombre
+            correo
+        }
     }
-  }
 `;

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
-import Loading from "./Loading";
+import Loading from "../../components/Loading";
 import { useMutation } from "@apollo/client";
-import { INICIO_SESION } from "../graphql/mutations/user/index";
+import { INICIO_SESION } from "../../graphql/mutations/user/index";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const navigate = useNavigate();
 
+    // Mutación para iniciar sesión
     const [login, { loading }] = useMutation(INICIO_SESION);
 
     const handleLogin = async (email: string, pass: string) => {
@@ -20,16 +21,25 @@ const Login: React.FC = () => {
                     password: pass
                 }
             });
-            const token = data.login.token;
-            localStorage.setItem('authToken', token);
-            Swal.fire({
-                title: '¡Éxito!',
-                text: 'Inicio de Sesión correcto',
-                icon: 'success',
-                confirmButtonText: 'Ok'
-            }).then(() => {
-                navigate('/HomeLogin');
-            });
+    
+            const token = data?.login?.token;
+    
+            if (token) {
+                localStorage.setItem('authToken', token);
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: 'Inicio de Sesión correcto',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                }).then(() => {
+                    alert(token);
+                    console.log("Token:", token);
+                    navigate(`/HomeLogin`);
+                });
+            } else {
+                throw new Error("Token no recibido");
+            }
+    
         } catch (error) {
             Swal.fire({
                 title: 'Error',
@@ -42,13 +52,13 @@ const Login: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        handleLogin(email, pass);
+        handleLogin(email, pass);  // Ejecuta el login con email y contraseña
     };
 
     return (
         <>
             <h1 className="bg-[#ADC178] text-white text-center text-5xl font-bold py-4">
-                CloseIA
+                CloseAI
             </h1>
             <div className='bg-[#DDE5B6] flex justify-center items-center h-screen'>
                 {loading && <Loading />}

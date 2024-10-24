@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { FORGOT_PASS } from "../graphql/mutations/user";
-import Loading from "./Loading";
+import { FORGOT_PASS } from "../../graphql/mutations/user";
+import Loading from "../../components/Loading";
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 
