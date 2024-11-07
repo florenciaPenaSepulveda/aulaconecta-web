@@ -1,25 +1,43 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import { useMutation } from '@apollo/client';
+import { CHANGE_PASSWORD_MUTATION } from '../../graphql/mutations/user';
 
 const ChangePassword: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const token = localStorage.getItem('authToken'); 
 
-  // Manejar el cambio en el campo de la nueva contraseña
+  const [changePassword, { loading, error }] = useMutation(CHANGE_PASSWORD_MUTATION, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    fetchPolicy: 'no-cache',
+  });
+
+  useEffect(() => {
+    // Mostrar alerta al llegar a la página de cambio de contraseña
+    Swal.fire({
+      title: 'Cambio de contraseña',
+      text: 'Por motivos de seguridad, por favor cambie su contraseña.',
+      icon: 'info',
+      confirmButtonText: 'Entendido'
+    });
+  }, []);
+
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  // Manejar el cambio en el campo de confirmación de contraseña
   const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(event.target.value);
   };
 
-  // Enviar el formulario
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    
-    // Validar si las contraseñas coinciden
+
     if (password !== confirmPassword) {
       Swal.fire({
         icon: 'error',
@@ -29,17 +47,37 @@ const ChangePassword: React.FC = () => {
       return;
     }
 
-    // Aquí puedes agregar la lógica para enviar la nueva contraseña al backend
-    // Por ejemplo, usando fetch o axios para hacer un POST con la nueva contraseña
-    // a un endpoint que maneje el cambio de contraseña.
+    try {
+      const { data } = await changePassword({
+        variables: {
+          newPassword: password, 
+        },
+      });
 
-    Swal.fire({
-      icon: 'success',
-      title: '¡Contraseña actualizada!',
-      text: 'Tu contraseña ha sido cambiada exitosamente.',
-    }).then(() => {
-      window.location.href = '/';  // Redirigir a la página principal o donde prefieras
-    });
+      if (data?.changePassword?.message) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Contraseña actualizada!',
+          text: data.changePassword.message,
+        }).then(() => {
+          localStorage.removeItem('isChangePassword'); // Eliminar el indicador de cambio de contraseña si existe
+          window.location.href = '/'; // Redirigir a la página principal
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: data?.changePassword?.message || 'Hubo un problema al cambiar la contraseña.',
+        });
+      }
+    } catch (error) {
+      console.error("Error al cambiar la contraseña:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo cambiar la contraseña. Por favor, inténtalo más tarde.',
+      });
+    }
   };
 
   return (
@@ -79,14 +117,16 @@ const ChangePassword: React.FC = () => {
             <button
               type="submit"
               className="bg-[#ADC178] hover:bg-[#DDE5B6] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              disabled={loading}
             >
-              Cambiar Contraseña
+              {loading ? 'Cambiando...' : 'Cambiar Contraseña'}
             </button>
           </div>
+          {error && <p className="text-red-500 text-xs mt-2">Error: {error.message}</p>}
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default ChangePassword;

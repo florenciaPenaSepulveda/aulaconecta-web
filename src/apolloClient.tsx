@@ -5,23 +5,23 @@ import {
   } from "@apollo/client";
   import { setContext } from "@apollo/client/link/context";
   
-  // Enlace HTTP para las solicitudes GraphQL
+
   const httpLink = createHttpLink({
-    uri: "https://auction-reported-incentive-mud.trycloudflare.com/graphql",  // Ajusta esto a tu URL del servidor GraphQL
+    uri: "https://manufacturer-banner-crafts-subaru.trycloudflare.com/graphql", 
   });
   
-  // Middleware para agregar el token en las solicitudes
+
   const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem('authToken');  // Obtener el token de localStorage
+    const token = localStorage.getItem('authToken');  7
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : "",  // Enviar el token si existe
+        authorization: token ? `Bearer ${token}` : "",  
       }
     };
   });
   
-  // Configura Apollo Client con el enlace de autenticación
+ 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),

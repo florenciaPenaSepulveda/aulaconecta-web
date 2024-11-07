@@ -10,7 +10,6 @@ const Login: React.FC = () => {
     const [pass, setPass] = useState('');
     const navigate = useNavigate();
 
-    // Mutación para iniciar sesión
     const [login, { loading }] = useMutation(INICIO_SESION);
 
     const handleLogin = async (email: string, pass: string) => {
@@ -23,19 +22,26 @@ const Login: React.FC = () => {
             });
     
             const token = data?.login?.token;
+            const isChangePassword = data?.login?.isChangePassword;
     
             if (token) {
+                console.log("Token recibido:", token);
+    
                 localStorage.setItem('authToken', token);
-                Swal.fire({
-                    title: '¡Éxito!',
-                    text: 'Inicio de Sesión correcto',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                }).then(() => {
-                    alert(token);
-                    console.log("Token:", token);
-                    navigate(`/HomeLogin`);
-                });
+                localStorage.setItem('isChangePassword', isChangePassword ? 'true' : 'false');
+    
+                if (isChangePassword) {
+                    navigate('/ChangePassword'); 
+                } else {
+                    Swal.fire({
+                        title: '¡Éxito!',
+                        text: 'Inicio de Sesión correcto',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    }).then(() => {
+                        navigate(`/HomeLogin`);
+                    });
+                }
             } else {
                 throw new Error("Token no recibido");
             }
@@ -49,7 +55,7 @@ const Login: React.FC = () => {
             });
         }
     };
-
+    
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         handleLogin(email, pass);  // Ejecuta el login con email y contraseña
@@ -77,7 +83,6 @@ const Login: React.FC = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
-
                             <h1 className="text-white">Contraseña:</h1>
                             <label htmlFor="password"></label>
                             <input
@@ -89,20 +94,17 @@ const Login: React.FC = () => {
                                 onChange={(e) => setPass(e.target.value)}
                                 required
                             />
-
                             <p className="text-white">Olvidé la contraseña.
                                 <Link className='text-black underline' to={"./ForgotPass"}> Recuperar</Link>
                             </p>
-
                             <button
                             type="submit"
                             className="bg-[#DDE5B6] rounded-xl text-2xl text-black py-2 hover:scale-105 duration-300 w-full"
                             disabled={loading}>
                             {loading ? 'Cargando...' : 'Iniciar Sesión'}
                             </button>
-
                             <p className="text-white">No tienes cuenta?
-                                <Link className='text-black underline'  to={"./Register"}> Regístrate</Link>
+                                <Link className='text-black underline' to={"./Register"}> Regístrate</Link>
                             </p>
                         </div>
                     </form>

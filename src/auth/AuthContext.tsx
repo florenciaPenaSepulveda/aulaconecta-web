@@ -7,11 +7,11 @@ interface AuthContextType {
     logout: () => void;
 }
 
-// Crea el contexto con un valor por defecto
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 interface AuthProviderProps {
-    children: ReactNode;  // Define el tipo de children como ReactNode
+    children: ReactNode;  
     }
 
 // Componente proveedor del contexto
@@ -19,12 +19,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<any>(null);
 
     const login = (username: string, password: string) => {
-    // Aquí va tu lógica para el login
-    setUser({ username, password }); // Simulación de un usuario logueado
+    setUser({ username, password }); 
     };
 
     const logout = () => {
-    // Aquí va tu lógica para el logout
     setUser(null);
     };
 

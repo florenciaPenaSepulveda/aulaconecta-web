@@ -4,6 +4,8 @@ export const INICIO_SESION = gql`
     mutation InicioSesion($email: String!, $password: String!) {
         login(email: $email, password: $password) {
             token
+            isChangePassword
+            message
         }
     }
 `;
@@ -31,6 +33,23 @@ export const REGISTER = gql`
       lastName
       email
       role
+    }
+  }
+`;
+
+export const CHANGE_PASSWORD_MUTATION = gql`
+  mutation ChangePassword($newPassword: String!) {
+    changePassword(newPassword: $newPassword) {
+      message
+    }
+  }
+`;
+
+
+export const CREATE_SUBJECT = gql`
+  mutation Mutation($createSubjectInput: CreateSubjectDto!) {
+    createSubject(createSubjectInput: $createSubjectInput) {
+      isCreateSubject
     }
   }
 `;

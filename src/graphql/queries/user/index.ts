@@ -10,8 +10,6 @@ export const INICIO_SESION = gql`
     }
 `;
 
-
-
 export const Mensaje = gql`
     query InicioSesion {
         mensaje
@@ -33,6 +31,17 @@ export const OBTENER_INFO = gql`
         conseguirInformacionUsuario{
             nombre
             correo
+        }
+    }
+`;
+
+
+export const LISTAR_CURSOS = gql`
+    query ListSubject {
+        listSubject {
+            name
+            numberOfClasses
+            id
         }
     }
 `;
