@@ -58,7 +58,7 @@ const Login: React.FC = () => {
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        handleLogin(email, pass);  // Ejecuta el login con email y contraseña
+        handleLogin(email, pass);  
     };
 
     return (

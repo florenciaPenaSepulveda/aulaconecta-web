@@ -46,10 +46,46 @@ export const CHANGE_PASSWORD_MUTATION = gql`
 `;
 
 
-export const CREATE_SUBJECT = gql`
-  mutation Mutation($createSubjectInput: CreateSubjectDto!) {
+export const CREAR_ASIGNATURA = gql`
+  mutation CrearAsignatura($createSubjectInput: CreateSubjectDto!) {
     createSubject(createSubjectInput: $createSubjectInput) {
       isCreateSubject
     }
+  }
+`;
+
+export const CREATE_USER = gql`
+  mutation CreateUser($createUserDto: CreateUserDto!) {
+    createUser(createUserDto: $createUserDto) {
+      id
+      firstName
+      lastName
+      email
+      rut
+      role
+    }
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser($rut: String!, $updateUserDto: UpdateUserDto!) {
+    updateUser(rut: $rut, updateUserDto: $updateUserDto) {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+`;
+
+export const DELETE_USER = gql`
+  mutation RemoveUser($rut: String!) {
+    removeUser(rut: $rut)
+  }
+`;
+
+export const TAKE_ASIT = gql`
+  mutation Mutation($createAsistInput: CreateAsistDto!) {
+    takeAsist(createAsistInput: $createAsistInput)
   }
 `;

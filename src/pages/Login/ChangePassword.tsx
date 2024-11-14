@@ -18,7 +18,6 @@ const ChangePassword: React.FC = () => {
   });
 
   useEffect(() => {
-    // Mostrar alerta al llegar a la página de cambio de contraseña
     Swal.fire({
       title: 'Cambio de contraseña',
       text: 'Por motivos de seguridad, por favor cambie su contraseña.',
@@ -60,8 +59,8 @@ const ChangePassword: React.FC = () => {
           title: '¡Contraseña actualizada!',
           text: data.changePassword.message,
         }).then(() => {
-          localStorage.removeItem('isChangePassword'); // Eliminar el indicador de cambio de contraseña si existe
-          window.location.href = '/'; // Redirigir a la página principal
+          localStorage.removeItem('isChangePassword'); 
+          window.location.href = '/'; 
         });
       } else {
         Swal.fire({

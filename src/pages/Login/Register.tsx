@@ -11,9 +11,8 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [pass, setPass] = useState<string>('');
   const [passVerifi, setPassVerifi] = useState<string>('');
-  const [rut, setRut] = useState<string>(''); // Añadir el RUT al formulario
-  const [role, setRole] = useState<string>('Student'); // Establecer un valor por defecto
-
+  const [rut, setRut] = useState<string>(''); 
+  const [role, setRole] = useState<string>('Student'); 
   const navigate = useNavigate();
   
   const [register, { loading }] = useMutation(REGISTER, {
@@ -37,18 +36,18 @@ const Register: React.FC = () => {
     }
   });
 
-  // Función para formatear el RUT en tiempo real
-  const handleRutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\./g, '').replace(/-/g, ''); // Eliminar puntos y guiones
 
-    // Limitar el RUT a 9 caracteres (sin contar puntos y guion)
+  const handleRutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\./g, '').replace(/-/g, ''); 
+
+
     if (value.length > 9) {
       value = value.slice(0, 9);
     }
 
     let formattedRut = value;
 
-    // Agregar los puntos y guion según la longitud del RUT
+    
     if (value.length > 1) {
       formattedRut = value.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + '-' + value.slice(-1);
     }
@@ -56,7 +55,7 @@ const Register: React.FC = () => {
     setRut(formattedRut);
   };
 
-  // Manejar el envío del formulario
+  
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -75,7 +74,7 @@ const Register: React.FC = () => {
         variables: {
           firstName: nombre,
           lastName: apellidos,
-          rut: rut, // Eliminar formato antes de enviar
+          rut: rut, 
           email: email,
           role: role,
           password: pass,
@@ -136,6 +135,7 @@ const Register: React.FC = () => {
               onChange={(e) => setRole(e.target.value)}
               required
             >
+              <option value="Admin">Admin</option>
               <option value="Teacher">Profesor</option>
               <option value="Parents">Padre/Tutor</option>
             </select>

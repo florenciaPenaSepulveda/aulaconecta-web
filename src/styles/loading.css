@@ -2,18 +2,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed; /* Posicionamiento fijo para que aparezca sobre el contenido */
-    top: 0; /* Desde el top 0 */
-    left: 0; /* Desde la izquierda 0 */
-    right: 0; /* Hasta la derecha 0 */
-    bottom: 0; /* Hasta el fondo 0 */
-    background-color: rgba(0, 0, 0, 0.5); /* Negro con opacidad del 50% */
-    z-index: 1000; /* Asegura que se muestre sobre otros elementos */
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000; 
 }
 
 .loading-spinner {
-    border: 16px solid #f3f3f3; /* Light grey background */
-    border-top: 16px solid #3498db; /* Blue color */
+    border: 16px solid #f3f3f3; 
+    border-top: 16px solid #3498db; 
     border-radius: 50%;
     width: 120px;
     height: 120px;

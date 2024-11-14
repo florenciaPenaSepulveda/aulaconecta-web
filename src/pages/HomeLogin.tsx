@@ -24,7 +24,6 @@ function HomeLogin() {
         navigate("/");
       });
     } else if (isChangePassword) {
-      // Mostrar alerta antes de redirigir a la página de cambio de contraseña
       Swal.fire({
         title: 'Recuperación de contraseña detectada',
         text: 'Por seguridad, es necesario que cambie su contraseña.',
@@ -40,7 +39,7 @@ function HomeLogin() {
     navigate("/ChangePassword");
   };
 
-  const userName = ""; // Puedes reemplazarlo con un valor si lo deseas
+  const userName = ""; 
 
   return (
     <div className="bg-[#DDE5B6] min-h-screen">
