@@ -106,3 +106,15 @@ export const GET_ALL_STUDENTS = gql`
     }
   }
 `;
+
+
+
+export const FIND_BY_RUT = gql`
+  query FindByRut($rut: String!) {
+    findByRut(rut: $rut) {
+      firstName
+      id
+      lastName
+    }
+  }
+`;

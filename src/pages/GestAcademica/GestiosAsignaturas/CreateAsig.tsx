@@ -16,7 +16,7 @@ const CreateAsig: React.FC = () => {
   const [numberOfClasses, setNumberOfClasses] = useState<number | "">("");
   const navigate = useNavigate();
 
-  // Ejecuta la query para obtener la lista de cursos
+  
   const { loading, error, data } = useQuery(LISTAR_CURSOS);
 
   const handleCreateSubject = () => {
@@ -29,7 +29,6 @@ const CreateAsig: React.FC = () => {
       return;
     }
 
-    // Aquí podrías añadir el código para crear la asignatura en el backend.
     Swal.fire("Asignatura creada", `Asignatura "${subjectName}" creada exitosamente`, "success");
     setSubjectName("");
     setNumberOfClasses("");

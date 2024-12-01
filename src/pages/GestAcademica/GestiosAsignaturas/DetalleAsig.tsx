@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
-import { LIST_USERS_BY_SUBJECT, LISTAR_CURSOS } from "../../../graphql/queries/user";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { LIST_USERS_BY_SUBJECT, LISTAR_CURSOS, FIND_BY_RUT } from "../../../graphql/queries/user";
 import { CREAR_ASIGNATURA, TAKE_ASIT } from "../../../graphql/mutations/user";
 import NavBar from "../../../components/NavBar";
 import Swal from "sweetalert2";
@@ -53,8 +53,11 @@ const DetalleAsig: React.FC = () => {
   );
 
   const [students, setStudents] = useState<Student[]>([]);
+  const [searchRut, setSearchRut] = useState<string>("");
   const [createSubject] = useMutation(CREAR_ASIGNATURA);
   const [takeAsit] = useMutation(TAKE_ASIT);
+
+  const [findByRut, { data: findByRutData }] = useLazyQuery(FIND_BY_RUT);
 
   useEffect(() => {
     if (data && data.listUsersBySubject.length > 0) {
@@ -73,6 +76,34 @@ const DetalleAsig: React.FC = () => {
       handleCreateSubject(); 
     }
   }, [data]);
+
+  useEffect(() => {
+    if (findByRutData) {
+      const foundStudent = findByRutData.findByRut;
+      if (foundStudent) {
+        const isAlreadyInList = students.some((student) => student.rut === foundStudent.rut);
+        
+        if (!isAlreadyInList) {
+          setStudents((prevStudents) => [
+            ...prevStudents,
+            {
+              id: foundStudent.id,
+              rut: foundStudent.rut,
+              firstName: foundStudent.firstName,
+              lastName: foundStudent.lastName,
+              email: "", 
+              role: "Student",
+              isPresent: false,
+            },
+          ]);
+        } else {
+          Swal.fire("Estudiante ya registrado", "Este estudiante ya está en la lista de asistencia.", "info");
+        }
+      } else {
+        Swal.fire("No encontrado", "No se encontró un estudiante con ese RUT.", "warning");
+      }
+    }
+  }, [findByRutData, students]);
 
   const handleCreateSubject = async () => {
     try {
@@ -101,12 +132,10 @@ const DetalleAsig: React.FC = () => {
 
   const handleConfirmAttendance = async () => {
     const attendanceSummary = students.map((student) => ({
-      idUser: Number(student.id),         // Convertir idUser a número
-      idSubject: subjectId,               // Mantener el idSubject
-      asist: student.isPresent ? 1 : 0,   // 1 si está presente, 0 si está ausente
+      idUser: Number(student.id),         
+      idSubject: subjectId,               
+      asist: student.isPresent ? 1 : 0,  
     }));
-  
-    console.log("Resumen de Asistencia a Enviar:", { asistencias: attendanceSummary });
   
     try {
       await takeAsit({
@@ -124,15 +153,19 @@ const DetalleAsig: React.FC = () => {
       Swal.fire("Error", "No se pudo registrar la asistencia. Revisa la consola para más detalles.", "error");
     }
   };
-  
-  
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchRut(e.target.value);
+  };
+
+  const handleSearchStudent = () => {
+    if (searchRut.trim() !== "") {
+      findByRut({ variables: { rut: searchRut } });
+    }
+  };
 
   if (loading) return <p>Cargando lista de estudiantes...</p>;
   if (error) return <p>Error al cargar estudiantes: {error.message}</p>;
-
-  if (students.length === 0) {
-    return <p>No hay estudiantes registrados en esta asignatura.</p>;
-  }
 
   return (
     <div className="bg-[#DDE5B6] min-h-screen">
@@ -148,6 +181,22 @@ const DetalleAsig: React.FC = () => {
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <h3 className="text-xl font-bold mb-4">Lista de Asistencia</h3>
           <p className="text-gray-500 mb-6">Marque los estudiantes presentes</p>
+
+          <div className="flex items-center space-x-4 mb-6">
+            <input
+              type="text"
+              placeholder="Buscar por RUT"
+              value={searchRut}
+              onChange={handleSearchChange}
+              className="border border-gray-300 rounded-lg px-4 py-2"
+            />
+            <button
+              onClick={handleSearchStudent}
+              className="bg-[#ADC178] text-white py-2 px-4 rounded-lg hover:bg-[#DDE5B6]"
+            >
+              Buscar
+            </button>
+          </div>
 
           <div className="grid gap-4">
             {students.map((student) => (
