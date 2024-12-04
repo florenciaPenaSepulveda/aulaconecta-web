@@ -28,7 +28,8 @@ const NavBar: React.FC = () => {
                 <Link to={"/HomeLogin"} className="text-white hover:bg-[#DDE5B6] rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Inicio</Link>
                 <Link to={"/RegisterEst"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Registro de Estudiantes</Link>
                 <Link to={"/CreateAsig"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Gestión de Asignaturas</Link>
-                <Link to={"/TomaAsistencia"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Control de Asistencia</Link>
+                <Link to={"/Anuncios"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Anuncios</Link>
+                <Link to={"/Chat"} className="text-white hover:bg-[#DDE5B6] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Chat</Link>
               </div>
             </div>
           </div>

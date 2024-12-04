@@ -132,6 +132,26 @@ export const GRADES_BY_SUBJECT_ID = gql`
   }
 `;
 
+export const CREATE_NOTICE = gql`
+  mutation CreateNotice($title: String!, $description: String!, $imageUrl: String) {
+    createNotice(title: $title, description: $description, imageUrl: $imageUrl) {
+      isCreateNotice
+    }
+  }
+`;
+
+
+export const GET_ALL_NOTICES = gql`
+  query GetAllNotices {
+    getAllNotices {
+      id
+      title
+      description
+      imageUrl
+    }
+  }
+`;
+
 
 
 

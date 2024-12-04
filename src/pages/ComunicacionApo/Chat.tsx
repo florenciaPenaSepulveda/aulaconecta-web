@@ -15,13 +15,6 @@ return (
                 Iniciar Chat
               </button>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-bold">Notificaciones Push</h3>
-              <p className="text-gray-500">Enviar notificaciones a apoderados</p>
-              <button className="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 mt-4">
-                Enviar Notificación
-              </button>
-            </div>
           </div>
         </div>
       </div>
