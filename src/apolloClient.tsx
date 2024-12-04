@@ -7,7 +7,7 @@ import {
   
 
   const httpLink = createHttpLink({
-    uri: "https://male-varieties-cio-mesh.trycloudflare.com/graphql", 
+    uri: "http://localhost:3000/graphql", 
   });
   
 

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client"; // Importa el hook de Apollo
+import { useMutation, useQuery } from "@apollo/client"; // Importa el hook de Apollo
 import { LISTAR_CURSOS } from "../../../graphql/queries/user";
 import NavBar from "../../../components/NavBar";
 import Swal from "sweetalert2";
+import { CREAR_ASIGNATURA } from "../../../graphql/mutations/user";
 
 interface Subject {
   id: string;
@@ -15,11 +16,14 @@ const CreateAsig: React.FC = () => {
   const [subjectName, setSubjectName] = useState("");
   const [numberOfClasses, setNumberOfClasses] = useState<number | "">("");
   const navigate = useNavigate();
+  const [createSubject] = useMutation(CREAR_ASIGNATURA, {
+    refetchQueries: [{ query: LISTAR_CURSOS }], // Refresca la lista de cursos tras crear uno nuevo
+  });
 
   
   const { loading, error, data } = useQuery(LISTAR_CURSOS);
 
-  const handleCreateSubject = () => {
+  const handleCreateSubject = async () => {
     if (!subjectName.trim()) {
       Swal.fire("Error", "El nombre de la asignatura no puede estar vacío", "warning");
       return;
@@ -29,13 +33,32 @@ const CreateAsig: React.FC = () => {
       return;
     }
 
-    Swal.fire("Asignatura creada", `Asignatura "${subjectName}" creada exitosamente`, "success");
-    setSubjectName("");
-    setNumberOfClasses("");
+    try {
+      const { data } = await createSubject({
+        variables: {
+          createSubjectInput: {
+            name: subjectName,
+            numberOfClasses: numberOfClasses,
+          },
+        },
+      });
+
+      if (data.createSubject.isCreateSubject) {
+        Swal.fire("Éxito", `Asignatura "${subjectName}" creada exitosamente`, "success");
+        setSubjectName("");
+        setNumberOfClasses("");
+      } else {
+        Swal.fire("Error", "No se pudo crear la asignatura", "error");
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Hubo un problema al crear la asignatura", "error");
+    }
   };
 
   const handleViewSubject = (id: string) => {
     navigate(`/DetalleAsig/${id}`);
+    
   };
 
   if (loading) return <p>Cargando cursos...</p>;
