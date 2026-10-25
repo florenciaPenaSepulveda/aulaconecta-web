@@ -14,7 +14,7 @@ const ForgotPass = () => {
     event.preventDefault();
     try {
       await forgotPass({ variables: { email: email.trim() } });
-      await notifyInfo("Revisa tu correo", "Te enviamos una contraseña temporal para ingresar.");
+      await notifyInfo("Revisa tu correo", "Si el correo está registrado, te enviamos una contraseña temporal para ingresar.");
       navigate("/");
     } catch (error) {
       notifyError(errorMessage(error, "No se pudo enviar el correo de recuperación."));

@@ -5,6 +5,7 @@ import AuthShell from "../../components/AuthShell";
 import { useAuth } from "../../auth/AuthContext";
 import { CHANGE_PASSWORD } from "../../graphql/operations";
 import { errorMessage, notifyError, notifySuccess, notifyWarning } from "../../lib/alerts";
+import { passwordError } from "../../lib/password";
 
 const ChangePassword = () => {
   const { session, markPasswordChanged } = useAuth();
@@ -19,8 +20,9 @@ const ChangePassword = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (password.length < 8) {
-      notifyWarning("La contraseña debe tener al menos 8 caracteres.");
+    const problema = passwordError(password);
+    if (problema) {
+      notifyWarning(problema);
       return;
     }
     if (password !== confirm) {

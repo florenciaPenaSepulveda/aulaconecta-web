@@ -47,5 +47,8 @@ export const errorMessage = (error: unknown, fallback = "Ocurrió un error inesp
   if (!message || message === "Bad Request Exception") {
     return fallback;
   }
+  if (/Too Many Requests/i.test(message)) {
+    return "Demasiados intentos. Espera un minuto e inténtalo de nuevo.";
+  }
   return message;
 };

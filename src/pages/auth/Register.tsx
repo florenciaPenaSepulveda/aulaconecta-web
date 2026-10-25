@@ -5,6 +5,7 @@ import AuthShell from "../../components/AuthShell";
 import { REGISTER } from "../../graphql/operations";
 import { formatRut, isValidRut } from "../../lib/rut";
 import { errorMessage, notifyError, notifySuccess, notifyWarning } from "../../lib/alerts";
+import { passwordError } from "../../lib/password";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -27,8 +28,9 @@ const Register = () => {
       notifyWarning("El RUT ingresado no es válido.");
       return;
     }
-    if (form.password.length < 8) {
-      notifyWarning("La contraseña debe tener al menos 8 caracteres.");
+    const problema = passwordError(form.password);
+    if (problema) {
+      notifyWarning(problema);
       return;
     }
     if (form.password !== form.confirm) {
