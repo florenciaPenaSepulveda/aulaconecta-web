@@ -35,7 +35,7 @@ Disponible en `http://localhost:5173`. La URL de la API se configura con `VITE_A
 
 Usuarios de ejemplo, con contraseña `Demo1234`: `admin@aulaconecta.cl`, `profesor@aulaconecta.cl` y `apoderado@aulaconecta.cl`.
 
-La web valida las contraseñas igual que la API (entre 8 y 72 caracteres, con letras y números) y pide la contraseña actual para cambiarla, muestra una pantalla de error en lugar de una página en blanco, actualiza el título de cada página e incluye un enlace para saltar al contenido con el teclado. El servidor limita los intentos de ingreso; si se superan, la web avisa que hay que esperar un minuto.
+La web valida las contraseñas igual que la API (entre 8 y 72 caracteres, con letras y números) y pide la contraseña actual para cambiarla, muestra una pantalla de error en lugar de una página en blanco, actualiza el título de cada página e incluye un enlace para saltar al contenido con el teclado. El build de producción incluye una política de seguridad de contenido (CSP) que solo permite scripts propios y conexiones al origen de `VITE_API_URL`. El servidor limita los intentos de ingreso; si se superan, la web avisa que hay que esperar un minuto.
 
 ## Comandos
 
