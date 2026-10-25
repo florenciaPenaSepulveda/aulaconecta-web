@@ -40,5 +40,6 @@ describe("alerts", () => {
     expect(alerts.errorMessage(new Error("Directo"))).toBe("Directo");
     expect(alerts.errorMessage(new Error("Bad Request Exception"), "Genérico")).toBe("Genérico");
     expect(alerts.errorMessage(undefined)).toBe("Ocurrió un error inesperado");
+    expect(alerts.errorMessage(new Error("ThrottlerException: Too Many Requests"))).toMatch(/Demasiados intentos/);
   });
 });
