@@ -1,8 +1,10 @@
+import { loadEnv } from "vite";
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
+import { contentSecurityPolicy } from "./vite.csp";
 
-export default defineConfig({
-  plugins: [react()],
+export default defineConfig(({ mode }) => ({
+  plugins: [react(), contentSecurityPolicy(loadEnv(mode, process.cwd(), "").VITE_API_URL || "http://localhost:3000/graphql")],
   test: {
     environment: "jsdom",
     globals: true,
@@ -18,4 +20,4 @@ export default defineConfig({
       thresholds: { statements: 80, branches: 80, functions: 80, lines: 80 },
     },
   },
-});
+}));
