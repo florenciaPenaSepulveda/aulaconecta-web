@@ -1,5 +1,7 @@
 # AulaConecta · Web
 
+[![CI](https://github.com/florenciaPenaSepulveda/aulaconecta-web/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/florenciaPenaSepulveda/aulaconecta-web/actions/workflows/ci.yml)
+
 Panel web de **AulaConecta**, plataforma de gestión escolar para profesores, apoderados y administración. Construido con React, Vite, TypeScript, Tailwind CSS y daisyUI, con un tema corporativo sobrio.
 
 ## Repositorios del proyecto
