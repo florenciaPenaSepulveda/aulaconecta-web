@@ -10,6 +10,7 @@ import { passwordError } from "../../lib/password";
 const ChangePassword = () => {
   const { session, markPasswordChanged } = useAuth();
   const navigate = useNavigate();
+  const [current, setCurrent] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [changePassword, { loading }] = useMutation(CHANGE_PASSWORD);
@@ -20,9 +21,17 @@ const ChangePassword = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (!current) {
+      notifyWarning("Ingresa tu contraseña actual.");
+      return;
+    }
     const problema = passwordError(password);
     if (problema) {
       notifyWarning(problema);
+      return;
+    }
+    if (password === current) {
+      notifyWarning("La nueva contraseña debe ser distinta de la actual.");
       return;
     }
     if (password !== confirm) {
@@ -30,7 +39,7 @@ const ChangePassword = () => {
       return;
     }
     try {
-      await changePassword({ variables: { newPassword: password } });
+      await changePassword({ variables: { currentPassword: current, newPassword: password } });
       markPasswordChanged();
       notifySuccess("Contraseña actualizada");
       navigate("/inicio");
@@ -49,6 +58,18 @@ const ChangePassword = () => {
       }
     >
       <form onSubmit={handleSubmit} className="space-y-4">
+        <label className="form-control">
+          <span className="label py-1">
+            <span className="field-label">{session.isChangePassword ? "Contraseña temporal" : "Contraseña actual"}</span>
+          </span>
+          <input
+            type="password"
+            className="input input-bordered w-full"
+            value={current}
+            onChange={(e) => setCurrent(e.target.value)}
+            autoComplete="current-password"
+          />
+        </label>
         <label className="form-control">
           <span className="label py-1">
             <span className="field-label">Nueva contraseña</span>
