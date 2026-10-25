@@ -35,6 +35,8 @@ Disponible en `http://localhost:5173`. La URL de la API se configura con `VITE_A
 
 Usuarios de ejemplo, con contraseña `Demo1234`: `admin@aulaconecta.cl`, `profesor@aulaconecta.cl` y `apoderado@aulaconecta.cl`.
 
+La web valida las contraseñas igual que la API (entre 8 y 72 caracteres, con letras y números), muestra una pantalla de error en lugar de una página en blanco, actualiza el título de cada página e incluye un enlace para saltar al contenido con el teclado. El servidor limita los intentos de ingreso; si se superan, la web avisa que hay que esperar un minuto.
+
 ## Comandos
 
 | Comando | Descripción |
@@ -42,7 +44,7 @@ Usuarios de ejemplo, con contraseña `Demo1234`: `admin@aulaconecta.cl`, `profes
 | `npm run dev` | Servidor de desarrollo |
 | `npm run build` | Compilación de producción |
 | `npm test` | Pruebas |
-| `npm run test:cov` | Pruebas con cobertura (umbral del 80 %; actual 99 %) |
+| `npm run test:cov` | Pruebas con cobertura (umbral del 80 %; actual 98 %) |
 
 ## Diseño
 
