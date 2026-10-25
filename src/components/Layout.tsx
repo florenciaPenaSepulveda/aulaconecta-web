@@ -62,6 +62,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="bg-primary text-primary-content shadow">
+        <a
+          href="#contenido"
+          className="sr-only rounded-btn bg-base-100 px-3 py-2 text-sm font-medium text-primary focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50"
+        >
+          Saltar al contenido
+        </a>
         <div className="navbar mx-auto max-w-7xl px-4">
           <div className="navbar-start">
             <div className="dropdown lg:hidden">
@@ -116,7 +122,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
           </div>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">{children}</main>
+      <main id="contenido" className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">
+        {children}
+      </main>
       <footer className="border-t border-base-300 bg-base-100 py-4 text-center text-xs text-base-content/60">
         AulaConecta · Plataforma de gestión escolar
       </footer>

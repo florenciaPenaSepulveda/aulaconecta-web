@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import Brand from "./Brand";
 
 interface Props {
@@ -8,7 +8,12 @@ interface Props {
   footer?: ReactNode;
 }
 
-const AuthShell = ({ title, subtitle, children, footer }: Props) => (
+const AuthShell = ({ title, subtitle, children, footer }: Props) => {
+  useEffect(() => {
+    document.title = `${title} · AulaConecta`;
+  }, [title]);
+
+  return (
   <div className="grid min-h-screen lg:grid-cols-2">
     <aside className="hidden flex-col justify-between bg-primary p-10 text-primary-content lg:flex">
       <Brand light size="lg" />
@@ -34,6 +39,7 @@ const AuthShell = ({ title, subtitle, children, footer }: Props) => (
       </div>
     </section>
   </div>
-);
+  );
+};
 
 export default AuthShell;
