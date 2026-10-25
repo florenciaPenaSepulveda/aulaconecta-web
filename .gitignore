@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+coverage/
+.expo/
+.env
+.env.*
+!.env.example
