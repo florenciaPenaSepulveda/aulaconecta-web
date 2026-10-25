@@ -1,16 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './styles/index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { ApolloProvider } from "@apollo/client";
-import client from './apolloClient';
+import App from "./App";
+import client from "./apolloClient";
+import "./styles/index.css";
 
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-          <App/>
+      <App />
     </ApolloProvider>
   </React.StrictMode>,
-)
+);

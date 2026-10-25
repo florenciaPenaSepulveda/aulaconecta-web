@@ -1,43 +1,54 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState, ReactNode } from "react";
+import { useApolloClient } from "@apollo/client";
+import { Session, loadSession, saveSession } from "../lib/session";
 
-// Define el tipo de datos que almacenará tu contexto
-interface AuthContextType {
-    user: any;
-    login: (username: string, password: string) => void;
-    logout: () => void;
+interface AuthContextValue {
+  session: Session | null;
+  signIn: (session: Session) => void;
+  markPasswordChanged: () => void;
+  signOut: () => void;
 }
 
+const AuthContext = createContext<AuthContextValue | null>(null);
 
-const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const client = useApolloClient();
+  const [session, setSession] = useState<Session | null>(loadSession);
 
-interface AuthProviderProps {
-    children: ReactNode;  
-    }
+  const signIn = useCallback((next: Session) => {
+    saveSession(next);
+    setSession(next);
+  }, []);
 
-// Componente proveedor del contexto
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<any>(null);
+  const markPasswordChanged = useCallback(() => {
+    setSession((current) => {
+      if (!current) {
+        return current;
+      }
+      const next = { ...current, isChangePassword: false };
+      saveSession(next);
+      return next;
+    });
+  }, []);
 
-    const login = (username: string, password: string) => {
-    setUser({ username, password }); 
-    };
+  const signOut = useCallback(() => {
+    saveSession(null);
+    setSession(null);
+    client.clearStore();
+  }, [client]);
 
-    const logout = () => {
-    setUser(null);
-    };
+  const value = useMemo(
+    () => ({ session, signIn, markPasswordChanged, signOut }),
+    [session, signIn, markPasswordChanged, signOut],
+  );
 
-    return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-        {children}
-    </AuthContext.Provider>
-    );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-// Hook personalizado para usar el contexto de autenticación
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth debe estar dentro del proveedor AuthProvider');
-    }
-    return context;
+export const useAuth = (): AuthContextValue => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth debe usarse dentro de AuthProvider");
+  }
+  return context;
 };
