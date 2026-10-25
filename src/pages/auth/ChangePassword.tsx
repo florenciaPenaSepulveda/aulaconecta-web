@@ -39,8 +39,8 @@ const ChangePassword = () => {
       return;
     }
     try {
-      await changePassword({ variables: { currentPassword: current, newPassword: password } });
-      markPasswordChanged();
+      const { data } = await changePassword({ variables: { currentPassword: current, newPassword: password } });
+      markPasswordChanged(data?.changePassword?.token);
       notifySuccess("Contraseña actualizada");
       navigate("/inicio");
     } catch (error) {

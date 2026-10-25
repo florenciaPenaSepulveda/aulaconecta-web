@@ -5,7 +5,7 @@ import { Session, loadSession, saveSession } from "../lib/session";
 interface AuthContextValue {
   session: Session | null;
   signIn: (session: Session) => void;
-  markPasswordChanged: () => void;
+  markPasswordChanged: (token?: string) => void;
   signOut: () => void;
 }
 
@@ -20,12 +20,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setSession(next);
   }, []);
 
-  const markPasswordChanged = useCallback(() => {
+  const markPasswordChanged = useCallback((token?: string) => {
     setSession((current) => {
       if (!current) {
         return current;
       }
-      const next = { ...current, isChangePassword: false };
+      const next = { ...current, isChangePassword: false, ...(token ? { token } : {}) };
       saveSession(next);
       return next;
     });

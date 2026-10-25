@@ -153,11 +153,12 @@ describe("ChangePassword", () => {
   it("actualiza la contraseña y marca la sesión como actualizada", async () => {
     renderPage(<ChangePassword />, {
       session: makeSession("teacher", { isChangePassword: true }),
-      mocks: [ok(CHANGE_PASSWORD, { currentPassword: "Demo1234", newPassword: "Clave12345" }, { changePassword: { message: "ok" } })],
+      mocks: [ok(CHANGE_PASSWORD, { currentPassword: "Demo1234", newPassword: "Clave12345" }, { changePassword: { message: "ok", token: "token-nuevo" } })],
     });
     expect(screen.getByText(/debes definir una nueva contraseña/i)).toBeInTheDocument();
     await submit("Clave12345", "Clave12345");
     await waitFor(() => expect(loadSession()?.isChangePassword).toBe(false));
+    expect(loadSession()?.token).toBe("token-nuevo");
     expect(screen.getByTestId("location")).toHaveTextContent("/inicio");
   });
 
