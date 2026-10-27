@@ -4,6 +4,16 @@
 
 Panel web de **AulaConecta**, plataforma de gestión escolar para profesores, apoderados y administración. Construido con React, Vite, TypeScript, Tailwind CSS y daisyUI, con un tema corporativo sobrio.
 
+## Inicio rápido
+
+```
+cp .env.example .env
+npm install
+npm run dev
+```
+
+Abre `http://localhost:5173` (requiere el [backend](https://github.com/florenciaPenaSepulveda/aulaconecta-backend) en ejecución). Pruebas con 98 % de cobertura (`npm test`).
+
 ## Repositorios del proyecto
 
 | Repositorio | Descripción |
@@ -25,13 +35,7 @@ Panel web de **AulaConecta**, plataforma de gestión escolar para profesores, ap
 
 ## Puesta en marcha
 
-```
-cp .env.example .env
-npm install
-npm run dev
-```
-
-Disponible en `http://localhost:5173`. La URL de la API se configura con `VITE_API_URL` (por defecto `http://localhost:3000/graphql`).
+Los comandos están en [Inicio rápido](#inicio-rápido). Disponible en `http://localhost:5173`. La URL de la API se configura con `VITE_API_URL` (por defecto `http://localhost:3000/graphql`).
 
 Usuarios de ejemplo, con contraseña `Demo1234`: `admin@aulaconecta.cl`, `profesor@aulaconecta.cl` y `apoderado@aulaconecta.cl`.
 
